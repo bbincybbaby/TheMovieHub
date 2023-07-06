@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/movieListingFragment">
+
+    <fragment
+        android:id="@+id/movieListingFragment"
+        android:name="me.bincy.movielist.ui.MovieListFragment"
+        tools:layout="@layout/fragment_movie_list"
+        android:label="Romantic Comedy" >
+        <action
+            android:id="@+id/action_movieListingFragment_to_searchListFragment"
+            app:destination="@id/searchListFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchListFragment"
+        android:name="me.bincy.movielist.ui.SearchListFragment"
+        android:label="Romantic Comedy"
+        tools:layout="@layout/fragment_movie_list" />
+</navigation>
