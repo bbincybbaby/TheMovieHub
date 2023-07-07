@@ -18,20 +18,23 @@ import me.bincy.movielist.ui.viewmodel.SearchListViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     private var searchView: SearchView? = null
     private var navController: NavController? = null
+
     private val viewModel: SearchListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val toolBar = findViewById<Toolbar>(R.id.mainToolBar)
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment?
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment?
         navController = navHostFragment?.navController
         navController?.let { setupActionBarWithNavController(it) }
         navController?.addOnDestinationChangedListener { _, destination, _ ->
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity() {
                 searchView?.onActionViewCollapsed()
             }
         }
+
         addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_movie_list, menu)

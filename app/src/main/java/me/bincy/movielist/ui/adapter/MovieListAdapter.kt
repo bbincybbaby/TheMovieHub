@@ -15,7 +15,6 @@ import javax.inject.Inject
 class MovieListAdapter @Inject constructor() :
     PagingDataAdapter<Movie, MovieListAdapter.MovieItemViewHolder>(differCallback) {
 
-
     class MovieItemViewHolder(private val binding: ItemMovieLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindData(movie: Movie) {

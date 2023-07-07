@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +58,7 @@ class SearchListFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.searchResults.collect {
+            viewModel.searchResults.flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED).collect {
                 moviesAdapter.submitList(it)
             }
         }
