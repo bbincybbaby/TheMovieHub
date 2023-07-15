@@ -30,17 +30,4 @@ class MovieRepositoryImpl(private val moshi: Moshi, private val context: Context
             moviesPage?.page?.movieItems?.movie
         } ?: emptyList()
     }
-
-    override suspend fun searchMovies(query: String): List<Movie> {
-        val allMovies = emptyList<Movie>().toMutableList()
-        return withContext(Dispatchers.IO) {
-            for (page in 1..3)
-                allMovies.addAll(getMovies(page))
-            if (query.length > 2) {
-                allMovies.filter { it.name?.contains(query, ignoreCase = true) ?: false }
-            } else {
-                allMovies
-            }
-        }
-    }
 }

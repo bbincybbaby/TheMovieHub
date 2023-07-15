@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import me.bincy.movielist.R
-import me.bincy.movielist.databinding.ItemMovieLayoutBinding
 import me.bincy.movielist.data.models.Movie
+import me.bincy.movielist.databinding.ItemMovieLayoutBinding
 import javax.inject.Inject
 
 class MovieListAdapter @Inject constructor() :

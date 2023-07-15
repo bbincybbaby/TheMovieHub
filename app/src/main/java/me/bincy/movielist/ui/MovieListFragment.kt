@@ -11,7 +11,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.bincy.movielist.databinding.FragmentMovieListBinding
 import me.bincy.movielist.ui.adapter.MovieListAdapter
@@ -52,13 +54,16 @@ class MovieListFragment : Fragment() {
         }
         binding?.movieListRecyclerView?.apply {
             layoutManager = gridLayoutManger
+            moviesAdapter.stateRestorationPolicy =
+                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             adapter = moviesAdapter
         }
 
         lifecycleScope.launch {
-            viewModel.moviesList.flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED).collect {
-                moviesAdapter.submitData(it)
-            }
+            viewModel.moviesList.flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                .collectLatest {
+                    moviesAdapter.submitData(it)
+                }
         }
     }
 }

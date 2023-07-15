@@ -4,5 +4,4 @@ import me.bincy.movielist.data.models.Movie
 
 interface MovieRepository {
     suspend fun getMovies(page: Int): List<Movie>
-    suspend fun searchMovies(query: String): List<Movie>
 }
