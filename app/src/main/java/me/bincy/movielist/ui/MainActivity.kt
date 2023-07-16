@@ -38,9 +38,8 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (searchView?.query?.isNotBlank() == true) {
+                if (searchView?.isIconified == false) {
                     searchView?.setQuery("", false)
-                } else if (searchView?.isIconified == false) {
                     searchView?.isIconified = true
                     enableDisableActionBarItems(true)
                 } else {

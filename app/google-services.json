@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "694027356412",
+    "project_id": "movielist-9f712",
+    "storage_bucket": "movielist-9f712.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694027356412:android:4a3ca54e2436e18eebaf79",
+        "android_client_info": {
+          "package_name": "me.bincy.movielist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694027356412-g8n4lotugf4e1f1isrodiu81mdh3vqeh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCwYt47JMljx30xs1vVwkXpqmAGAT-upQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694027356412-g8n4lotugf4e1f1isrodiu81mdh3vqeh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

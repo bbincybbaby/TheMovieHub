@@ -11,8 +11,9 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:layout_marginHorizontal="5dp"
+        android:background="@android:color/black"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
-        tools:layout="@layout/item_movie_layout"
+        tools:listitem="@layout/item_movie_layout"
         android:paddingTop="?attr/actionBarSize" />
 </androidx.constraintlayout.widget.ConstraintLayout>

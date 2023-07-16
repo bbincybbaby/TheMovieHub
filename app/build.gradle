@@ -45,6 +45,11 @@ android {
     viewBinding {
         enabled = true
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 kapt {
@@ -80,4 +85,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation("com.google.firebase:firebase-crashlytics-ktx")
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2'
+    testImplementation 'io.mockk:mockk:1.13.5'
+    testImplementation 'androidx.paging:paging-testing:3.2.0-rc01'
 }

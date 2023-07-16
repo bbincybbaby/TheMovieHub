@@ -2,4 +2,5 @@
     <string name="app_name">TheMovieHub</string>
     <string name="search">Search</string>
     <string name="romantic_comedy">Romantic Comedy</string>
+    <string name="movie_cover_image">Movie cover image</string>
 </resources>

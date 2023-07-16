@@ -20,9 +20,13 @@ class MovieRepositoryImpl(private val moshi: Moshi, private val context: Context
                 3 -> R.raw.content_page_3
                 else -> null
             }
-            val jsonString = jsonFile?.let { data ->
-                context.resources.openRawResource(data)
-                    .bufferedReader().use { it.readText() }
+            val jsonString = try {
+                jsonFile?.let { data ->
+                    context.resources.openRawResource(data)
+                        .bufferedReader().use { it.readText() }
+                }
+            } catch (_:Exception){
+                null
             }
 
             val adapter: JsonAdapter<MoviesPage> = moshi.adapter(MoviesPage::class.java)

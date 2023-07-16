@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="5dp"
     android:layout_marginVertical="5dp"
+    tools:showIn="@layout/fragment_movie_list"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
@@ -16,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/img_empty"
+        android:contentDescription="@string/movie_cover_image"
         tools:srcCompat="@drawable/img_empty" />
 
     <TextView
@@ -25,10 +27,11 @@
         android:ellipsize="end"
         android:fontFamily="@font/titillium_web_light"
         android:lines="1"
-        android:textColor="#BCBEC0"
+        android:textColor="@color/movie_title_text_color"
         android:textSize="16sp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="40dp"
+        tools:text="Movie Title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
