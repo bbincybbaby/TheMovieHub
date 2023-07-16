@@ -15,7 +15,9 @@ class MovieListPagingSource @Inject constructor(
             val currentPage = params.key ?: 1
             var response = repository.getMovies(currentPage)
             if (query?.isNotBlank() == true) {
-                response = response.filter { it.name?.contains(query, true) == true }
+                response = response.filter { it.name?.contains(query, true) == true }.map {
+                    Movie(it.name,it.posterImage,query)
+                }
             }
             LoadResult.Page(
                 data = response,

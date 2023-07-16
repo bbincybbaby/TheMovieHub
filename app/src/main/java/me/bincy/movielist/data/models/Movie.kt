@@ -6,5 +6,6 @@ data class Movie(
     @Json(name = "name")
     var name: String?,
     @Json(name = "poster-image")
-    var posterImage: String?
+    var posterImage: String?,
+    var queryData:String?=""
 )

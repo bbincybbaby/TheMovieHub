@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             searchView = searchItem.actionView as SearchView
             searchView?.maxWidth = Integer.MAX_VALUE
             searchView?.isIconified = true
-
+            searchView?.queryHint = "Search Movie with name"
             searchView?.setOnSearchClickListener {
                 searchView?.onActionViewExpanded()
                 enableDisableActionBarItems(false)

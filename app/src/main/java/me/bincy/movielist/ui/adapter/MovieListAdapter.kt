@@ -1,8 +1,13 @@
 package me.bincy.movielist.ui.adapter
 
+import android.graphics.Color
 import android.net.Uri
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +23,22 @@ class MovieListAdapter @Inject constructor() :
     class MovieItemViewHolder(private val binding: ItemMovieLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindData(movie: Movie) {
-            binding.movieTitleTextView.text = movie.name
+            if (movie.queryData?.isNotBlank() == true){
+                val builder = SpannableStringBuilder(movie.name)
+                movie.queryData?.let { queryString ->
+                    movie.name?.indexOf(queryString, ignoreCase = true)?.let { index ->
+                        builder.setSpan(
+                            ForegroundColorSpan(Color.YELLOW),
+                            index,
+                            queryString.length + index,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                }
+                binding.movieTitleTextView.setText(builder, TextView.BufferType.SPANNABLE)
+            } else{
+                binding.movieTitleTextView.text = movie.name
+            }
             Glide.with(binding.movieImageView.context)
                 .load(Uri.parse("file:///android_asset/${movie.posterImage}"))
                 .placeholder(R.drawable.img_empty)
