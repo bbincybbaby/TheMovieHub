@@ -26,7 +26,6 @@ jobs:
       - name: Cache Gradle and wrapper
         uses: actions/cache@v2
         with:
-          report-path: build/reports/*.xml
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
@@ -38,7 +37,7 @@ jobs:
       - name: Run Unit Test
         run: ./gradlew test
       
-      - name: Android Test Report
+      - name: Show Unit Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
         if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
         
