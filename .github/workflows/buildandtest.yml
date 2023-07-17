@@ -1,0 +1,38 @@
+name: "Build and Test"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  #1
+  unit-tests:
+    #2
+    runs-on: ubuntu-latest
+    #3
+    steps:
+      #4
+      - name: Checkout the code
+        uses: actions/checkout@v2.6.0
+      #5
+      - name: Setup JAVA 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 11
+      #6
+      - name: Cache Gradle and wrapper
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+      #7
+      - name: Run lint
+        run: ./gradlew lintDebug
+      #8
+      - name: Run Unit Test
+        run: ./gradlew test
