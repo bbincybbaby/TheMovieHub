@@ -50,6 +50,9 @@ android {
             includeAndroidResources = true
         }
     }
+    lintOptions {
+        lintConfig = file("$rootDir/IgnoreLintRule.xml")
+    }
 }
 
 kapt {
