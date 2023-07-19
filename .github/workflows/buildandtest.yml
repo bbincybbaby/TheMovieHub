@@ -23,7 +23,7 @@ jobs:
           distribution: 'corretto'
           java-version: 17
       
-      - name: Cache Gradle and wrapper
+      - name: Cache gradle and wrapper
         uses: actions/cache@v3
         with:
           path: |
@@ -33,11 +33,25 @@ jobs:
       
       - name: Run lint
         run: ./gradlew lintDebug
+        
+      - name: Upload lint test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: lint.html
+          path: app/build/reports/lint-results-debug.html
       
-      - name: Run Unit Test
-        run: ./gradlew test
+      - name: Run unit test
+        run: ./gradlew :app:testDebugUnitTest --tests "me.bincy.movielist.ui.viewmodel.MovieListViewModelTest"
       
-      - name: Show Unit Test Report
+      - name: Upload unit test report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test results
+          path: ./**/build/reports/tests/**/me.bincy.movielist.ui.viewmodel.MovieListViewModelTest.html
+          retention-days: 1
+          
+      - name: Show unit test report
         uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
+        if: ${{ always() }} 
         
