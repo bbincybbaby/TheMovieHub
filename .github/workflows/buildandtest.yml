@@ -1,0 +1,95 @@
+name: "Test & Build"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Setup JAVA 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
+      - name: Cache gradle and wrapper
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+      - name: Run lint
+        run: ./gradlew lintDebug
+      - name: Upload lint test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: lint.html
+          path: app/build/reports/lint-results-debug.html
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Setup JAVA 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
+      - name: Cache gradle and wrapper
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+      - name: Run unit test
+        run: ./gradlew :app:testDebugUnitTest --tests "me.bincy.movielist.ui.viewmodel.MovieListViewModelTest"
+      - name: Upload unit test report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test_results.html
+          path: app/build/reports/tests/testDebugUnitTest/classes/me.bincy.movielist.ui.viewmodel.MovieListViewModelTest.html
+      - name: Show unit test report
+        uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Setup JAVA 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
+      - name: Cache gradle and wrapper
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'themoviehub.jks'
+          fileDir: './app/keystore/'
+          encodedString: ${{ secrets.KEYSTORE }}
+      - name: Generate signed APK
+        run: ./gradlew assembleRelease
+        env:
+          SIGNING_STORE_PASSWORD:  ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS:  ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD:  ${{ secrets.SIGNING_KEY_PASSWORD }}
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: themoviehub.apk
+          path: app/build/outputs/apk/release/app-release.apk
